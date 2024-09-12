@@ -50,6 +50,10 @@ poetry shell
 O sistema utiliza o banco de dados SQLite por padrão. Para inicializar o banco de dados, rode as migrações:
 
 ```bash
+cd .\ProManage\
+```
+
+```bash
 poetry run python manage.py makemigrations
 poetry run python manage.py migrate
 ```
