@@ -14,7 +14,6 @@
 
 - **Python 3.10+**
 - **Poetry** (para gerenciamento de dependências)
-- **Django 4.x**
 
 ## Configuração Inicial
 
