@@ -44,6 +44,7 @@ Ative o ambiente virtual (caso não ative automaticamente):
 ```bash
 poetry shell
 ```
+*caso esteja no vscode, mude o interpretador python para o path do poetry*
 
 ### Passo 3: Configurar o banco de dados
 
