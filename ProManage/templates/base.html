@@ -2,13 +2,13 @@
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ProManage</title>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,36 +17,38 @@
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- CSS personalizado -->
     <link href="{% static 'css/custom.css' %}" rel="stylesheet">
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="{% url 'project_list' %}">ProManage</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Olá, {{ user.username }}!</a>
-                    </li>
-                    <li class="nav-item">
-                        <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="nav-link btn btn-link" style="padding: 0;">Logout</button>
-                        </form>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Olá, {{ user.username }}!</a>
+                </li>
+                <li class="nav-item">
+                    <form id="logout-form" method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link" style="padding: 0;">Logout</button>
+                    </form>
+                </li>
                 {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'signup' %}">Cadastre-se</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'signup' %}">Cadastre-se</a>
+                </li>
                 {% endif %}
             </ul>
         </div>
@@ -55,18 +57,18 @@
     <!-- Conteúdo Principal -->
     <div class="container mt-4">
         {% if messages %}
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    {% for message in messages %}
-                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                            {{ message }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    {% endfor %}
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                {% endfor %}
             </div>
+        </div>
         {% endif %}
 
         <!-- Bloco de conteúdo -->
@@ -75,19 +77,18 @@
     </div>
 
     <script>
-        $(document).ready(function(){
-            $('#edit-task-form').submit(function(event){
+        $(document).ready(function () {
+            $('#edit-task-form').submit(function (event) {
                 event.preventDefault();
-                
+
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'POST',
                     data: $(this).serialize(),
-                    success: function(response){
-                        // Atualiza a página ou a tarefa com os novos dados
-                        location.reload();  // Atualiza a página após a edição
+                    success: function (response) {
+                        location.reload();
                     },
-                    error: function(response){
+                    error: function (response) {
                         alert('Erro ao editar a tarefa.');
                     }
                 });
@@ -95,4 +96,5 @@
         });
     </script>
 </body>
+
 </html>

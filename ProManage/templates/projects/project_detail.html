@@ -111,14 +111,11 @@
             var taskStatus = button.data('task-status');
             var taskDueDate = button.data('task-due-date');
 
-            // Preencher os campos do modal
             var modal = $(this);
             modal.find('#taskTitle').val(taskTitle);
             modal.find('#taskDescription').val(taskDescription);
-            modal.find('#taskDueDate').val(taskDueDate);  // Preencher o campo de data
-            modal.find('#taskStatus').val(taskStatus);  // Preencher o status
-
-            // Atualizar o action do formulário para a URL correta
+            modal.find('#taskDueDate').val(taskDueDate);
+            modal.find('#taskStatus').val(taskStatus);
             modal.find('#edit-task-form').attr('action', '/tasks/' + taskId + '/edit/');
         });
 

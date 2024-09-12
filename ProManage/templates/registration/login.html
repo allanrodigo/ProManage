@@ -14,11 +14,11 @@
                     <form method="post">
                         {% csrf_token %}
 
-                        <!-- Exibir erros globais de login (não campo específico) -->
+                        <!-- Exibir erros globais de login -->
                         {% if form.non_field_errors %}
-                            <div class="alert alert-danger" role="alert">
-                                {{ form.non_field_errors }}
-                            </div>
+                        <div class="alert alert-danger" role="alert">
+                            {{ form.non_field_errors }}
+                        </div>
                         {% endif %}
 
                         <!-- Campo Username -->
@@ -26,9 +26,9 @@
                             {{ form.username.label_tag }}
                             {{ form.username }}
                             {% if form.username.errors %}
-                                <div class="text-danger">
-                                    {{ form.username.errors }}
-                                </div>
+                            <div class="text-danger">
+                                {{ form.username.errors }}
+                            </div>
                             {% endif %}
                         </div>
 
@@ -37,9 +37,9 @@
                             {{ form.password.label_tag }}
                             {{ form.password }}
                             {% if form.password.errors %}
-                                <div class="text-danger">
-                                    {{ form.password.errors }}
-                                </div>
+                            <div class="text-danger">
+                                {{ form.password.errors }}
+                            </div>
                             {% endif %}
                         </div>
 

@@ -26,21 +26,21 @@
         {{ formset.management_form }}
         <div id="tasks">
             {% for form in formset %}
-                <div class="form-row">
-                    <div class="col-md-4">
-                        {{ form.title.label_tag }} {{ form.title }}
-                    </div>
-                    <div class="col-md-6">
-                        {{ form.description.label_tag }} {{ form.description }}
-                    </div>
-                    <div class="col-md-2">
-                        {{ form.due_date.label_tag }} {{ form.due_date }}
-                    </div>
-                    <div class="col-md-1 form-check">
-                        {{ form.is_completed.label_tag }} {{ form.is_completed }}
-                    </div>
-                    {{ form.DELETE.label_tag }} {{ form.DELETE }}
+            <div class="form-row">
+                <div class="col-md-4">
+                    {{ form.title.label_tag }} {{ form.title }}
                 </div>
+                <div class="col-md-6">
+                    {{ form.description.label_tag }} {{ form.description }}
+                </div>
+                <div class="col-md-2">
+                    {{ form.due_date.label_tag }} {{ form.due_date }}
+                </div>
+                <div class="col-md-1 form-check">
+                    {{ form.is_completed.label_tag }} {{ form.is_completed }}
+                </div>
+                {{ form.DELETE.label_tag }} {{ form.DELETE }}
+            </div>
             {% endfor %}
         </div>
 
