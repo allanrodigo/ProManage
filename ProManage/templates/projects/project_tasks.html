@@ -1,0 +1,13 @@
+<!-- templates/projects/project_tasks.html -->
+<h2>Tarefas de {{ project.name }}</h2>
+<a href="{% url 'create_task' project.id %}">Adicionar Tarefa</a>
+<ul>
+    {% for task in tasks %}
+    <li>
+        <strong>{{ task.title }}</strong> - {{ task.get_status_display }} - {{ task.due_date }}
+        <a href="{% url 'edit_task' task.id %}">Editar</a>
+    </li>
+    {% empty %}
+    <li>Nenhuma tarefa criada.</li>
+    {% endfor %}
+</ul>

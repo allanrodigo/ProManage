@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>{{ form.instance.pk|yesno:"Editar Projeto,Novo Projeto" }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            {{ form.start_date.label_tag }}
+            {{ form.start_date }}
+        </div>
+        <div class="form-group">
+            {{ form.end_date.label_tag }}
+            {{ form.end_date }}
+        </div>
+
+        <h4>Tarefas</h4>
+        {{ formset.management_form }}
+        <div id="tasks">
+            {% for form in formset %}
+                <div class="form-row">
+                    <div class="col-md-4">
+                        {{ form.title.label_tag }} {{ form.title }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form.description.label_tag }} {{ form.description }}
+                    </div>
+                    <div class="col-md-2">
+                        {{ form.due_date.label_tag }} {{ form.due_date }}
+                    </div>
+                    <div class="col-md-1 form-check">
+                        {{ form.is_completed.label_tag }} {{ form.is_completed }}
+                    </div>
+                    {{ form.DELETE.label_tag }} {{ form.DELETE }}
+                </div>
+            {% endfor %}
+        </div>
+
+        <button type="submit" class="btn btn-success">{{ form.instance.pk|yesno:"Atualizar,Salvar" }}</button>
+        <a href="{% url 'project_list' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

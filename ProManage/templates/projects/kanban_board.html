@@ -1,0 +1,40 @@
+<!-- templates/projects/kanban_board.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center text-primary">{{ project.name }}</h2>
+
+    <div class="row mt-5">
+        <!-- Colunas de tarefas -->
+        {% for column_title, tasks in [('to-do', pending_tasks), ('in progress', in_progress_tasks), ('done', completed_tasks)] %}
+        <div class="col-md-4">
+            <h3 class="text-center">{{ column_title }}</h3>
+            <div class="task-column">
+                {% for task in tasks %}
+                <div class="task-item p-2 mb-3 border rounded">
+                    <h5>{{ task.title }}</h5>
+                    <p>{{ task.description }}</p>
+
+                    <!-- Adicionando botões para mudar o status da tarefa -->
+                    <div class="task-actions">
+                        <form method="POST" action="{% url 'update_task_status' task.id %}">
+                            {{ csrf_token() }}
+                            <button type="submit" name="status" value="to-do" class="btn btn-warning">to-do</button>
+                            <button type="submit" name="status" value="in-progress" class="btn btn-info">in progress</button>
+                            <button type="submit" name="status" value="review" class="btn btn-info">review</button>
+                            <button type="submit" name="status" value="done" class="btn btn-success">done</button>
+                        </form>
+
+                        <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#editTaskModal" data-task-id="{{ task.id }}" data-task-title="{{ task.title }}" data-task-description="{{ task.description }}" data-task-status="{{ task.status }}">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

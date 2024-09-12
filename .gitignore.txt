@@ -1,0 +1,2 @@
+# Ignora diretórios de migrações locais
+migrations/

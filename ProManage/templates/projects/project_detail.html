@@ -1,0 +1,126 @@
+<!-- templates/projects/project_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-center">{{ project.name }}</h2>
+
+    <div class="row mt-5">
+        <!-- Loop para cada coluna (A Fazer, Em Progresso, etc.) -->
+        {% for column_title, tasks in columns %}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    <h4>{{ column_title }}</h4>
+                </div>
+                <ul class="list-group list-group-flush" data-toggle="modal" data-target="#editTaskModal">
+                    {% for task in tasks %}
+                    <li class="list-group-item task-item" data-toggle="modal" data-target="#editTaskModal"
+                        data-task-id="{{ task.id }}" data-task-title="{{ task.title }}"
+                        data-task-description="{{ task.description }}" data-task-status="{{ task.status }}">
+                        {{ task.title }}
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-muted">Nenhuma tarefa</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Botão para adicionar nova tarefa -->
+    <div class="text-center mt-4">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addTaskModal">
+            Adicionar Nova Tarefa
+        </button>
+    </div>
+
+    <!-- Modal para adicionar nova tarefa -->
+    <div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addTaskModalLabel">Adicionar Nova Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="add-task-form" method="post" action="{% url 'create_task' project.id %}">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary btn-block">Salvar Tarefa</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para editar tarefa -->
+    <div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog" aria-labelledby="editTaskModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editTaskModalLabel">Editar Tarefa</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Formulário de edição de tarefa -->
+                    <form id="edit-task-form" method="post" action="">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="taskTitle">Título da Tarefa</label>
+                            <input type="text" class="form-control" id="taskTitle" name="title">
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDescription">Descrição</label>
+                            <textarea class="form-control" id="taskDescription" name="description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDueDate">Data de Vencimento</label>
+                            <input type="date" class="form-control" id="taskDueDate" name="due_date">
+                        </div>
+                        <div class="form-group">
+                            <label for="taskStatus">Status</label>
+                            <select class="form-control" id="taskStatus" name="status">
+                                <option value="to-do">to-do</option>
+                                <option value="in-progress">in progress</option>
+                                <option value="review">review</option>
+                                <option value="done">done</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $('#editTaskModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            var taskId = button.data('task-id');
+            var taskTitle = button.data('task-title');
+            var taskDescription = button.data('task-description');
+            var taskStatus = button.data('task-status');
+            var taskDueDate = button.data('task-due-date');
+
+            // Preencher os campos do modal
+            var modal = $(this);
+            modal.find('#taskTitle').val(taskTitle);
+            modal.find('#taskDescription').val(taskDescription);
+            modal.find('#taskDueDate').val(taskDueDate);  // Preencher o campo de data
+            modal.find('#taskStatus').val(taskStatus);  // Preencher o status
+
+            // Atualizar o action do formulário para a URL correta
+            modal.find('#edit-task-form').attr('action', '/tasks/' + taskId + '/edit/');
+        });
+
+    </script>
+    {% endblock %}
